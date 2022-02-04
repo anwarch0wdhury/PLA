@@ -1,3 +1,15 @@
 <resources>
     <string name="app_name">PLA</string>
+
+    <!-- Text -->
+    <string name="error_message">Retrieving information is failed.</string>
+    <string name="there_are">There are"&#x20;"</string>
+
+    <!-- Unit -->
+    <string name="temperature_unit">"&#176;"C</string>
+    <string name="pressure_unit">"&#x20;"hPa</string>
+    <string name="speed_unit">"&#x20;"kph</string>
+    <string name="percent">"&#x20;"%</string>
+
+
 </resources>
