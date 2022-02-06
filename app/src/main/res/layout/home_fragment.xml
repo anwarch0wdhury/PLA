@@ -5,19 +5,18 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-
     <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline1"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.5" />
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline2"
+        android:id="@+id/guidelineH1"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.5" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guidelineV1"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
         app:layout_constraintGuide_percent="0.5" />
 
     <TextView
@@ -27,7 +26,7 @@
         android:layout_margin="5dp"
         android:fontFamily="@font/chakrapetchregular"
         android:textSize="35sp"
-        app:layout_constraintEnd_toStartOf="@+id/guideline1"
+        app:layout_constraintEnd_toStartOf="@+id/guidelineV1"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="10:26 pm" />
@@ -39,7 +38,7 @@
         android:fontFamily="@font/chakrapetchregular"
         android:textSize="15sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/guideline1"
+        app:layout_constraintStart_toStartOf="@+id/guidelineV1"
         app:layout_constraintTop_toTopOf="@+id/tvCurrentTime"
         tools:text="Tuesday,9 november" />
 
@@ -52,7 +51,7 @@
         android:textSize="12dp"
         android:textStyle="italic"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/guideline1"
+        app:layout_constraintStart_toStartOf="@+id/guidelineV1"
         app:layout_constraintTop_toBottomOf="@+id/tvCurrentDay" />
 
     <androidx.cardview.widget.CardView
@@ -66,42 +65,42 @@
         app:layout_constraintBottom_toTopOf="@+id/hourList"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/guideline2">
+        app:layout_constraintTop_toTopOf="@+id/guidelineH1">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
             <androidx.constraintlayout.widget.Guideline
-                android:id="@+id/guideline04"
+                android:id="@+id/guidelineV2"
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
                 android:orientation="vertical"
                 app:layout_constraintGuide_percent=".20" />
 
             <androidx.constraintlayout.widget.Guideline
-                android:id="@+id/guideline3"
+                android:id="@+id/guidelineV3"
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
                 android:orientation="vertical"
                 app:layout_constraintGuide_percent=".40" />
 
             <androidx.constraintlayout.widget.Guideline
-                android:id="@+id/guideline07"
+                android:id="@+id/guidelineV4"
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
                 android:orientation="vertical"
                 app:layout_constraintGuide_percent=".50" />
 
             <androidx.constraintlayout.widget.Guideline
-                android:id="@+id/guideline5"
+                android:id="@+id/guidelineV5"
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
                 android:orientation="vertical"
                 app:layout_constraintGuide_percent=".60" />
 
             <androidx.constraintlayout.widget.Guideline
-                android:id="@+id/guideline6"
+                android:id="@+id/guidelineV6"
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
                 android:orientation="vertical"
@@ -130,7 +129,7 @@
                 android:textSize="12sp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="@+id/textfeelsLike"
-                app:layout_constraintEnd_toStartOf="@+id/guideline04"
+                app:layout_constraintEnd_toStartOf="@+id/guidelineV2"
                 app:layout_constraintStart_toEndOf="@+id/textfeelsLike"
                 app:layout_constraintTop_toTopOf="@+id/textfeelsLike"
                 tools:text="6C" />
@@ -144,9 +143,8 @@
                 android:textSize="12sp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="@+id/tvCurrentWindSpeed"
-                app:layout_constraintStart_toStartOf="@+id/guideline6"
+                app:layout_constraintStart_toStartOf="@+id/guidelineV6"
                 app:layout_constraintTop_toTopOf="@+id/tvCurrentWindSpeed" />
-
 
             <TextView
                 android:id="@+id/tvCurrentPressure"
@@ -155,7 +153,6 @@
                 android:fontFamily="@font/chakrapetchregular"
                 android:gravity="center"
                 android:textSize="12sp"
-
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="@+id/textPressure"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -172,7 +169,7 @@
                 android:textSize="12sp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="@+id/tvCurrentCloud"
-                app:layout_constraintStart_toStartOf="@+id/guideline5"
+                app:layout_constraintStart_toStartOf="@+id/guidelineV5"
                 app:layout_constraintTop_toTopOf="@+id/tvCurrentCloud" />
 
             <TextView
@@ -185,7 +182,7 @@
                 android:textSize="12sp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="@+id/textWindSpeed"
-                app:layout_constraintEnd_toStartOf="@+id/guideline6"
+                app:layout_constraintEnd_toStartOf="@+id/guidelineV6"
                 app:layout_constraintStart_toEndOf="@+id/textWindSpeed"
                 app:layout_constraintTop_toTopOf="@+id/textWindSpeed"
                 tools:text="9 kph" />
@@ -199,7 +196,7 @@
                 android:text="Humidity"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="@+id/tvCurrentFeels"
-                app:layout_constraintStart_toStartOf="@+id/guideline04"
+                app:layout_constraintStart_toStartOf="@+id/guidelineV2"
                 app:layout_constraintTop_toTopOf="@+id/tvCurrentFeels" />
 
             <TextView
@@ -211,7 +208,7 @@
                 android:textSize="12sp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="@+id/texthumidity"
-                app:layout_constraintEnd_toStartOf="@+id/guideline3"
+                app:layout_constraintEnd_toStartOf="@+id/guidelineV3"
                 app:layout_constraintStart_toEndOf="@+id/texthumidity"
                 app:layout_constraintTop_toTopOf="@+id/texthumidity"
                 tools:text="20%" />
@@ -225,7 +222,7 @@
                 android:text="Humidity"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="@+id/tvCurrentHumidity"
-                app:layout_constraintStart_toStartOf="@+id/guideline3"
+                app:layout_constraintStart_toStartOf="@+id/guidelineV3"
                 app:layout_constraintTop_toTopOf="@+id/tvCurrentHumidity" />
 
             <TextView
@@ -237,11 +234,10 @@
                 android:textSize="12sp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="@+id/textcloud"
-                app:layout_constraintEnd_toStartOf="@+id/guideline5"
+                app:layout_constraintEnd_toStartOf="@+id/guidelineV5"
                 app:layout_constraintStart_toEndOf="@+id/textcloud"
                 app:layout_constraintTop_toTopOf="@+id/textcloud"
                 tools:text="82%" />
-
 
             <ImageView
                 android:id="@+id/imgvCurrentIcon"
@@ -249,7 +245,7 @@
                 android:layout_height="50dp"
                 android:layout_marginTop="5dp"
                 android:src="@drawable/weather"
-                app:layout_constraintEnd_toStartOf="@+id/guideline3"
+                app:layout_constraintEnd_toStartOf="@+id/guidelineV3"
                 app:layout_constraintHorizontal_bias="0.531"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -261,7 +257,7 @@
                 android:fontFamily="@font/chakrapetchregular"
                 android:textSize="10sp"
                 app:layout_constraintBottom_toTopOf="@+id/textfeelsLike"
-                app:layout_constraintEnd_toStartOf="@+id/guideline3"
+                app:layout_constraintEnd_toStartOf="@+id/guidelineV3"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/imgvCurrentIcon"
                 tools:text="It will be cold" />
@@ -281,7 +277,7 @@
                 android:layout_height="25dp"
                 android:src="@drawable/ic_sunset"
                 app:layout_constraintBottom_toBottomOf="@+id/sunrise"
-                app:layout_constraintStart_toStartOf="@+id/guideline07"
+                app:layout_constraintStart_toStartOf="@+id/guidelineV4"
                 app:layout_constraintTop_toTopOf="@+id/sunrise" />
 
             <TextView
@@ -323,14 +319,12 @@
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="@+id/imgvCurrentIcon"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="@+id/guideline3"
+                app:layout_constraintStart_toStartOf="@+id/guidelineV3"
                 app:layout_constraintTop_toTopOf="@+id/imgvCurrentIcon"
                 tools:text="-25C" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.cardview.widget.CardView>
-
-
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/forecastList"
@@ -364,7 +358,7 @@
         android:text="@string/error_message"
         android:textSize="18sp"
         android:visibility="gone"
-        app:layout_constraintBottom_toTopOf="@+id/guideline2"
+        app:layout_constraintBottom_toTopOf="@+id/guidelineH1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
@@ -376,6 +370,5 @@
         app:layout_constraintBottom_toTopOf="@+id/errorLabel"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

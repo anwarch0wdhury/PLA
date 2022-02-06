@@ -25,7 +25,7 @@
 
 
             <androidx.constraintlayout.widget.Guideline
-                android:id="@+id/guideline04"
+                android:id="@+id/guidelineV2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
@@ -36,7 +36,7 @@
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:src="@drawable/weather"
-                app:layout_constraintEnd_toStartOf="@+id/guideline04"
+                app:layout_constraintEnd_toStartOf="@+id/guidelineV2"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tvHourlyTime" />
 
@@ -47,7 +47,7 @@
                 android:layout_margin="2dp"
                 android:fontFamily="@font/chakrapetchregular"
                 android:textSize="10sp"
-                app:layout_constraintEnd_toStartOf="@+id/guideline04"
+                app:layout_constraintEnd_toStartOf="@+id/guidelineV2"
                 app:layout_constraintHorizontal_bias="1.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
@@ -62,7 +62,7 @@
                 android:textSize="18sp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/guideline04"
+                app:layout_constraintEnd_toStartOf="@+id/guidelineV2"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/imgvHourlyIcon"
                 tools:text="-6C" />
@@ -77,7 +77,7 @@
                 android:src="@drawable/ic_feelsliketemp"
                 android:textSize="12sp"
                 android:textStyle="bold"
-                app:layout_constraintStart_toStartOf="@+id/guideline04"
+                app:layout_constraintStart_toStartOf="@+id/guidelineV2"
                 app:layout_constraintTop_toTopOf="parent" />
 
 
@@ -90,7 +90,7 @@
                 android:src="@drawable/ic_wind"
                 android:textSize="12sp"
                 android:textStyle="bold"
-                app:layout_constraintStart_toStartOf="@+id/guideline04"
+                app:layout_constraintStart_toStartOf="@+id/guidelineV2"
                 app:layout_constraintTop_toBottomOf="@+id/texthumidity" />
 
             <ImageView
@@ -102,7 +102,7 @@
                 android:src="@drawable/ic_humidity"
                 android:text="Humidity"
                 android:textStyle="bold"
-                app:layout_constraintStart_toStartOf="@+id/guideline04"
+                app:layout_constraintStart_toStartOf="@+id/guidelineV2"
                 app:layout_constraintTop_toBottomOf="@+id/textfeelsLike" />
 
 
@@ -115,7 +115,7 @@
                 android:src="@drawable/ic_cloud"
                 android:text="Humidity"
                 android:textStyle="bold"
-                app:layout_constraintStart_toStartOf="@+id/guideline04"
+                app:layout_constraintStart_toStartOf="@+id/guidelineV2"
                 app:layout_constraintTop_toBottomOf="@+id/textWindSpeed" />
 
             <TextView
