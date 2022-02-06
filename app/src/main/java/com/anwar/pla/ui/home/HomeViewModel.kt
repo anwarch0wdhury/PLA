@@ -1,10 +1,7 @@
 package com.anwar.pla.ui.home
 
 import android.util.Log
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import com.anwar.pla.common.Resource
 import com.anwar.pla.common.Utilities
 import com.anwar.pla.data.WeatherResponse

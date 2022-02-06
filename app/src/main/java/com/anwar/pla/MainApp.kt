@@ -8,13 +8,13 @@ import dagger.hilt.android.HiltAndroidApp
 class MainApp : Application(){
 
     companion object {
-        lateinit var instance: Application
-        lateinit var resourses: Resources
+        lateinit var instance  : Application
+        lateinit var resourses : Resources
     }
 
     override fun onCreate() {
         super.onCreate()
-        instance = this
+        instance  = this
         resourses = resources
     }
 }

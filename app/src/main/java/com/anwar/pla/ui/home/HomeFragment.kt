@@ -4,8 +4,12 @@ import android.Manifest
 import android.annotation.SuppressLint
 import android.content.pm.PackageManager
 import android.location.Address
+import android.location.Geocoder
+import android.location.Location
+import android.os.Bundle
 import android.view.View
-import android.view.View.*
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.TextView
@@ -13,12 +17,15 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.anwar.pla.MainApp
 import com.anwar.pla.R
 import com.anwar.pla.common.Resource
 import com.anwar.pla.common.Utilities
 import com.anwar.pla.data.GpsLocation
+import com.anwar.pla.di.GlideApp
 import com.anwar.pla.model.weather.Current
 import com.anwar.pla.ui.weather.DailyForecastAdapter
 import com.anwar.pla.ui.weather.HourlyForecastAdapter
@@ -26,66 +33,53 @@ import com.bumptech.glide.request.RequestOptions
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import dagger.hilt.android.AndroidEntryPoint
-import android.location.Geocoder
-import android.location.Location
-import android.os.Bundle
-import androidx.lifecycle.MutableLiveData
-import com.anwar.pla.MainApp
-import com.anwar.pla.di.GlideApp
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.isActive
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 import java.util.*
 
 @AndroidEntryPoint
 class HomeFragment : Fragment(R.layout.home_fragment){
 
-    private lateinit var recyclerViewday       : RecyclerView
-    private lateinit var recyclerViewhour      : RecyclerView
-    private lateinit var currentWeather        : ConstraintLayout
-    private lateinit var loadingIndicator      : ProgressBar
-    private lateinit var current_icon          : ImageView
-    private lateinit var errorLabel            : TextView
-    private lateinit var current_day           : TextView
-    private lateinit var current_time          : TextView
-    private lateinit var current_description   : TextView
-    private lateinit var current_feels         : TextView
-    private lateinit var current_temp          : TextView
-    private lateinit var current_windspeed     : TextView
-    private lateinit var current_humidity      : TextView
-    private lateinit var current_address       : TextView
-    private lateinit var current_pressure      : TextView
-    private lateinit var current_cloud         : TextView
-    private lateinit var sunrise               : TextView
-    private lateinit var sunset                : TextView
-    private lateinit var job                   : Job
+    private lateinit var recyclerViewday    : RecyclerView
+    private lateinit var recyclerViewhour   : RecyclerView
+    private lateinit var currentWeather     : ConstraintLayout
+    private lateinit var loadingIndicator   : ProgressBar
+    private lateinit var current_icon       : ImageView
+    private lateinit var errorLabel         : TextView
+    private lateinit var current_day        : TextView
+    private lateinit var current_time       : TextView
+    private lateinit var current_description: TextView
+    private lateinit var current_feels      : TextView
+    private lateinit var current_temp       : TextView
+    private lateinit var current_windspeed  : TextView
+    private lateinit var current_humidity   : TextView
+    private lateinit var current_address    : TextView
+    private lateinit var current_pressure   : TextView
+    private lateinit var current_cloud      : TextView
+    private lateinit var sunrise            : TextView
+    private lateinit var sunset             : TextView
+    private lateinit var job                : Job
 
     private lateinit var fusedLocationClient: FusedLocationProviderClient
     private val viewModel: HomeViewModel by viewModels()
     private val forecastAdapter = DailyForecastAdapter()
     private val hourlyAdapter   = HourlyForecastAdapter()
 
-
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupUI(view)
-       job = GlobalScope.launch {
-          while (isActive){
-          current_day.text            = Utilities.day()
-          current_time.text           = Utilities.time()}
-      }
-
         when(isLocationPermissionGranted()){
-            true ->{ location() }
+            true  ->{ location() }
             false ->{}
         }
-    }
-
-    override fun onStart() {
-        super.onStart()
         setupObservers()
+        job = GlobalScope.launch(newSingleThreadContext("Update time")) {
+           while (isActive){
+               withContext(Dispatchers.Main) {
+                   current_day.text  = Utilities.day()
+                   current_time.text = Utilities.time()
+               }
+           }
+        }
     }
 
     private fun isLocationPermissionGranted(): Boolean {
@@ -135,16 +129,16 @@ class HomeFragment : Fragment(R.layout.home_fragment){
     fun setCurrentData(current: Current) {
 
             val iconString = Utilities.iconUrl(icon = current.weather[0].icon)
-            current_address.text       = viewModel.address.value.toString()
-            current_description.text   = MainApp.resourses.getString(R.string.there_are) + current.weather[0].description
-            current_temp.text          = current.temp.toInt().toString() + MainApp.resourses.getString(R.string.temperature_unit)
-            current_feels.text         = current.feels_like.toInt().toString() + MainApp.resourses.getString(R.string.temperature_unit)
-            current_windspeed.text     = Utilities.msToKph(current.wind_speed).toInt().toString() + MainApp.resourses.getString(R.string.speed_unit)
-            current_cloud.text         = current.clouds.toString() + MainApp.resourses.getString(R.string.percent)
-            current_pressure.text      = current.pressure.toString() + MainApp.resourses.getString(R.string.pressure_unit)
-            current_humidity.text      = current.humidity.toString() + MainApp.resourses.getString(R.string.percent)
-            sunrise.text               = Utilities.hourToString(current.sunrise.toLong())
-            sunset.text                = Utilities.hourToString(current.sunset.toLong())
+            current_address.text     = viewModel.address.value.toString()
+            current_description.text = MainApp.resourses.getString(R.string.there_are) + current.weather[0].description
+            current_temp.text        = current.temp.toInt().toString() + MainApp.resourses.getString(R.string.temperature_unit)
+            current_feels.text       = current.feels_like.toInt().toString() + MainApp.resourses.getString(R.string.temperature_unit)
+            current_windspeed.text   = Utilities.msToKph(current.wind_speed).toInt().toString() + MainApp.resourses.getString(R.string.speed_unit)
+            current_cloud.text       = current.clouds.toString() + MainApp.resourses.getString(R.string.percent)
+            current_pressure.text    = current.pressure.toString() + MainApp.resourses.getString(R.string.pressure_unit)
+            current_humidity.text    = current.humidity.toString() + MainApp.resourses.getString(R.string.percent)
+            sunrise.text             = Utilities.hourToString(current.sunrise.toLong())
+            sunset.text              = Utilities.hourToString(current.sunset.toLong())
             GlideApp.with(this)
                 .applyDefaultRequestOptions(
                     RequestOptions().placeholder(R.drawable.weather)
@@ -152,8 +146,6 @@ class HomeFragment : Fragment(R.layout.home_fragment){
                 )
                 .load(iconString)
                 .into(current_icon)
-
-
     }
 
     private fun setupObservers() {
@@ -165,14 +157,12 @@ class HomeFragment : Fragment(R.layout.home_fragment){
                     current_day.visibility      = GONE
                     current_time.visibility     = GONE
                     current_address.visibility  = GONE
-                    currentWeather.visibility   = GONE
                     recyclerViewday.visibility  = GONE
                     recyclerViewhour.visibility = GONE
                     loadingIndicator.visibility = VISIBLE
                     errorLabel.visibility       = GONE
                 }
                 Resource.Status.SUCCESS -> {
-
                     current_day.visibility      = VISIBLE
                     current_time.visibility     = VISIBLE
                     current_address.visibility  = VISIBLE
@@ -206,7 +196,6 @@ class HomeFragment : Fragment(R.layout.home_fragment){
         errorLabel       = view.findViewById(R.id.errorLabel)
         recyclerViewday  = view.findViewById(R.id.forecastList)
         recyclerViewhour = view.findViewById(R.id.hourList)
-        currentWeather   = view.findViewById(R.id.currentWeather)
         recyclerViewday.apply {
             this.layoutManager = LinearLayoutManager(requireActivity(),LinearLayoutManager.HORIZONTAL,false)
             adapter = forecastAdapter
@@ -216,24 +205,24 @@ class HomeFragment : Fragment(R.layout.home_fragment){
             adapter = hourlyAdapter
         }
 
-        current_icon          = view.findViewById(R.id.imgvCurrentIcon)
-        current_day           = view.findViewById(R.id.tvCurrentDay)
-        current_time          = view.findViewById(R.id.tvCurrentTime)
-        current_description   = view.findViewById(R.id.tvCurrentDescription)
-        current_feels         = view.findViewById(R.id.tvCurrentFeels)
-        current_pressure      = view.findViewById(R.id.tvCurrentPressure)
-        current_cloud         = view.findViewById(R.id.tvCurrentCloud)
-        current_temp          = view.findViewById(R.id.tvCurrentTemp)
-        current_windspeed     = view.findViewById(R.id.tvCurrentWindSpeed)
-        current_humidity      = view.findViewById(R.id.tvCurrentHumidity)
-        sunrise               = view.findViewById(R.id.sunrise)
-        sunset                = view.findViewById(R.id.sunset)
-        current_address       = view.findViewById(R.id.tvCurrentAddress)
+        current_icon        = view.findViewById(R.id.imgvCurrentIcon)
+        current_day         = view.findViewById(R.id.tvCurrentDay)
+        current_time        = view.findViewById(R.id.tvCurrentTime)
+        current_description = view.findViewById(R.id.tvCurrentDescription)
+        current_feels       = view.findViewById(R.id.tvCurrentFeels)
+        current_pressure    = view.findViewById(R.id.tvCurrentPressure)
+        current_cloud       = view.findViewById(R.id.tvCurrentCloud)
+        current_temp        = view.findViewById(R.id.tvCurrentTemp)
+        current_windspeed   = view.findViewById(R.id.tvCurrentWindSpeed)
+        current_humidity    = view.findViewById(R.id.tvCurrentHumidity)
+        sunrise             = view.findViewById(R.id.sunrise)
+        sunset              = view.findViewById(R.id.sunset)
+        current_address     = view.findViewById(R.id.tvCurrentAddress)
 
     }
 
-    override fun onPause() {
-        super.onPause()
+    override fun onStop() {
+        super.onStop()
         job.cancel()
     }
 }
