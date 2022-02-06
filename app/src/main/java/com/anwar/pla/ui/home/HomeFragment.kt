@@ -13,7 +13,6 @@ import android.view.View.VISIBLE
 import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.TextView
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -41,7 +40,6 @@ class HomeFragment : Fragment(R.layout.home_fragment){
 
     private lateinit var recyclerViewday    : RecyclerView
     private lateinit var recyclerViewhour   : RecyclerView
-    private lateinit var currentWeather     : ConstraintLayout
     private lateinit var loadingIndicator   : ProgressBar
     private lateinit var current_icon       : ImageView
     private lateinit var errorLabel         : TextView
@@ -166,7 +164,6 @@ class HomeFragment : Fragment(R.layout.home_fragment){
                     current_day.visibility      = VISIBLE
                     current_time.visibility     = VISIBLE
                     current_address.visibility  = VISIBLE
-                    currentWeather.visibility   = VISIBLE
                     recyclerViewday.visibility  = VISIBLE
                     recyclerViewhour.visibility = VISIBLE
                     loadingIndicator.visibility = GONE
@@ -181,7 +178,6 @@ class HomeFragment : Fragment(R.layout.home_fragment){
                     current_day.visibility      = GONE
                     current_time.visibility     = GONE
                     current_address.visibility  = GONE
-                    currentWeather.visibility   = GONE
                     recyclerViewday.visibility  = GONE
                     recyclerViewhour.visibility = GONE
                     loadingIndicator.visibility = GONE
