@@ -47,7 +47,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/chakrapetchregular"
-        android:text="Address"
+        android:text="Address, Country"
         android:textSize="12dp"
         android:textStyle="italic"
         app:layout_constraintEnd_toEndOf="parent"
@@ -55,6 +55,8 @@
         app:layout_constraintTop_toBottomOf="@+id/tvCurrentDay" />
 
     <androidx.cardview.widget.CardView
+
+        android:id="@+id/cvCurrentWeather"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_margin="5dp"
@@ -62,7 +64,8 @@
         app:cardCornerRadius="8dp"
         app:cardElevation="3dp"
         app:cardPreventCornerOverlap="false"
-        app:layout_constraintBottom_toTopOf="@+id/hourList"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@+id/rvHourlyList"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/guidelineH1">
@@ -76,35 +79,28 @@
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
                 android:orientation="vertical"
-                app:layout_constraintGuide_percent=".20" />
+                app:layout_constraintGuide_percent=".18" />
 
             <androidx.constraintlayout.widget.Guideline
                 android:id="@+id/guidelineV3"
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
                 android:orientation="vertical"
-                app:layout_constraintGuide_percent=".40" />
-
-            <androidx.constraintlayout.widget.Guideline
-                android:id="@+id/guidelineV4"
-                android:layout_width="wrap_content"
-                android:layout_height="0dp"
-                android:orientation="vertical"
-                app:layout_constraintGuide_percent=".50" />
+                app:layout_constraintGuide_percent=".38" />
 
             <androidx.constraintlayout.widget.Guideline
                 android:id="@+id/guidelineV5"
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
                 android:orientation="vertical"
-                app:layout_constraintGuide_percent=".60" />
+                app:layout_constraintGuide_percent=".58" />
 
             <androidx.constraintlayout.widget.Guideline
                 android:id="@+id/guidelineV6"
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
                 android:orientation="vertical"
-                app:layout_constraintGuide_percent=".80" />
+                app:layout_constraintGuide_percent=".78" />
 
             <ImageView
                 android:id="@+id/textfeelsLike"
@@ -132,7 +128,7 @@
                 app:layout_constraintEnd_toStartOf="@+id/guidelineV2"
                 app:layout_constraintStart_toEndOf="@+id/textfeelsLike"
                 app:layout_constraintTop_toTopOf="@+id/textfeelsLike"
-                tools:text="6C" />
+                tools:text="-26 C" />
 
             <ImageView
                 android:id="@+id/textPressure"
@@ -185,7 +181,7 @@
                 app:layout_constraintEnd_toStartOf="@+id/guidelineV6"
                 app:layout_constraintStart_toEndOf="@+id/textWindSpeed"
                 app:layout_constraintTop_toTopOf="@+id/textWindSpeed"
-                tools:text="9 kph" />
+                tools:text="90 kph" />
 
             <ImageView
                 android:id="@+id/texthumidity"
@@ -211,7 +207,7 @@
                 app:layout_constraintEnd_toStartOf="@+id/guidelineV3"
                 app:layout_constraintStart_toEndOf="@+id/texthumidity"
                 app:layout_constraintTop_toTopOf="@+id/texthumidity"
-                tools:text="20%" />
+                tools:text="100%" />
 
             <ImageView
                 android:id="@+id/textcloud"
@@ -237,7 +233,7 @@
                 app:layout_constraintEnd_toStartOf="@+id/guidelineV5"
                 app:layout_constraintStart_toEndOf="@+id/textcloud"
                 app:layout_constraintTop_toTopOf="@+id/textcloud"
-                tools:text="82%" />
+                tools:text="100%" />
 
             <ImageView
                 android:id="@+id/imgvCurrentIcon"
@@ -269,7 +265,7 @@
                 android:layout_marginBottom="5dp"
                 android:src="@drawable/ic_sunrise"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="@+id/textfeelsLike" />
+                app:layout_constraintStart_toEndOf="@+id/texthumidity" />
 
             <ImageView
                 android:id="@+id/sunseticon"
@@ -277,13 +273,14 @@
                 android:layout_height="25dp"
                 android:src="@drawable/ic_sunset"
                 app:layout_constraintBottom_toBottomOf="@+id/sunrise"
-                app:layout_constraintStart_toStartOf="@+id/guidelineV4"
+                app:layout_constraintStart_toEndOf="@+id/tvCurrentCloud"
                 app:layout_constraintTop_toTopOf="@+id/sunrise" />
 
             <TextView
                 android:id="@+id/sunrise"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="2dp"
                 android:fontFamily="@font/chakrapetchregular"
                 android:gravity="center"
                 android:text="4.56 am"
@@ -305,7 +302,7 @@
                 android:textSize="12sp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="@+id/sunseticon"
-                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/guidelineV6"
                 app:layout_constraintStart_toEndOf="@+id/sunseticon"
                 app:layout_constraintTop_toTopOf="@+id/sunseticon" />
 
@@ -323,11 +320,10 @@
                 app:layout_constraintTop_toTopOf="@+id/imgvCurrentIcon"
                 tools:text="-25C" />
         </androidx.constraintlayout.widget.ConstraintLayout>
-
     </androidx.cardview.widget.CardView>
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/forecastList"
+        android:id="@+id/rvDailyList"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
@@ -340,12 +336,12 @@
         tools:listitem="@layout/item_forecast" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/hourList"
+        android:id="@+id/rvHourlyList"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        app:layout_constraintBottom_toTopOf="@+id/forecastList"
+        app:layout_constraintBottom_toTopOf="@+id/rvDailyList"
         app:layout_constraintStart_toStartOf="parent"
         tools:context=".ui.home.HomeFragment"
         tools:itemCount="7"

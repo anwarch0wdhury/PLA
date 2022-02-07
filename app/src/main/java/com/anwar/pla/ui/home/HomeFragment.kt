@@ -13,6 +13,7 @@ import android.view.View.VISIBLE
 import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.TextView
+import androidx.cardview.widget.CardView
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -38,9 +39,10 @@ import java.util.*
 @AndroidEntryPoint
 class HomeFragment : Fragment(R.layout.home_fragment){
 
-    private lateinit var recyclerViewday    : RecyclerView
-    private lateinit var recyclerViewhour   : RecyclerView
-    private lateinit var loadingIndicator   : ProgressBar
+    private lateinit var daily_weather_list : RecyclerView
+    private lateinit var hourly_weather_list: RecyclerView
+    private lateinit var loadingi_indicator : ProgressBar
+    private lateinit var current_weather    : CardView
     private lateinit var current_icon       : ImageView
     private lateinit var errorLabel         : TextView
     private lateinit var current_day        : TextView
@@ -119,7 +121,7 @@ class HomeFragment : Fragment(R.layout.home_fragment){
                  val area = address.adminArea
 
                 viewModel.address = MutableLiveData("$area, $country")
-                viewModel.fetchForecastList(location.latitude,location.longitude)
+                viewModel.setForecastList(location.latitude,location.longitude)
             }
     }
 
@@ -152,22 +154,24 @@ class HomeFragment : Fragment(R.layout.home_fragment){
             when (forecast.status) {
 
                 Resource.Status.LOADING -> {
-                    current_day.visibility      = GONE
-                    current_time.visibility     = GONE
-                    current_address.visibility  = GONE
-                    recyclerViewday.visibility  = GONE
-                    recyclerViewhour.visibility = GONE
-                    loadingIndicator.visibility = VISIBLE
-                    errorLabel.visibility       = GONE
+                    current_weather.visibility     = GONE
+                    current_day.visibility         = GONE
+                    current_time.visibility        = GONE
+                    current_address.visibility     = GONE
+                    daily_weather_list.visibility  = GONE
+                    hourly_weather_list.visibility = GONE
+                    loadingi_indicator.visibility  = VISIBLE
+                    errorLabel.visibility          = GONE
                 }
                 Resource.Status.SUCCESS -> {
-                    current_day.visibility      = VISIBLE
-                    current_time.visibility     = VISIBLE
-                    current_address.visibility  = VISIBLE
-                    recyclerViewday.visibility  = VISIBLE
-                    recyclerViewhour.visibility = VISIBLE
-                    loadingIndicator.visibility = GONE
-                    errorLabel.visibility       = GONE
+                    current_weather.visibility     = VISIBLE
+                    current_day.visibility         = VISIBLE
+                    current_time.visibility        = VISIBLE
+                    current_address.visibility     = VISIBLE
+                    daily_weather_list.visibility  = VISIBLE
+                    hourly_weather_list.visibility = VISIBLE
+                    loadingi_indicator.visibility  = GONE
+                    errorLabel.visibility          = GONE
                     if(forecast.data?.daily != null){
                         forecastAdapter.updateData(forecast.data.daily)
                         hourlyAdapter.updateData(forecast.data.hourly)
@@ -175,28 +179,30 @@ class HomeFragment : Fragment(R.layout.home_fragment){
                     }
                 }
                 Resource.Status.ERROR -> {
-                    current_day.visibility      = GONE
-                    current_time.visibility     = GONE
-                    current_address.visibility  = GONE
-                    recyclerViewday.visibility  = GONE
-                    recyclerViewhour.visibility = GONE
-                    loadingIndicator.visibility = GONE
-                    errorLabel.visibility       = VISIBLE
+                    current_weather.visibility     = GONE
+                    current_day.visibility         = GONE
+                    current_time.visibility        = GONE
+                    current_address.visibility     = GONE
+                    daily_weather_list.visibility  = GONE
+                    hourly_weather_list.visibility = GONE
+                    loadingi_indicator.visibility  = GONE
+                    errorLabel.visibility          = VISIBLE
                 }
             }
         })
     }
 
     private fun setupUI(view: View) {
-        loadingIndicator = view.findViewById(R.id.loadingIndicator)
-        errorLabel       = view.findViewById(R.id.errorLabel)
-        recyclerViewday  = view.findViewById(R.id.forecastList)
-        recyclerViewhour = view.findViewById(R.id.hourList)
-        recyclerViewday.apply {
+        loadingi_indicator  = view.findViewById(R.id.loadingIndicator)
+        errorLabel          = view.findViewById(R.id.errorLabel)
+        current_weather     = view.findViewById(R.id.cvCurrentWeather)
+        daily_weather_list  = view.findViewById(R.id.rvDailyList)
+        hourly_weather_list = view.findViewById(R.id.rvHourlyList)
+        daily_weather_list.apply {
             this.layoutManager = LinearLayoutManager(requireActivity(),LinearLayoutManager.HORIZONTAL,false)
             adapter = forecastAdapter
         }
-        recyclerViewhour.apply {
+        hourly_weather_list.apply {
             layoutManager = LinearLayoutManager(requireActivity(),LinearLayoutManager.HORIZONTAL,false)
             adapter = hourlyAdapter
         }

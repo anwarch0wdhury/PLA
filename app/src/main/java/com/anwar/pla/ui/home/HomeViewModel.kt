@@ -21,8 +21,7 @@ class HomeViewModel @Inject constructor(private val repository: ForecastRemoteDa
 
     private var job: Job? = null
 
-    fun fetchForecastList(latitude:Double,longitude:Double) {
-        job?.cancel()
+    fun setForecastList(latitude:Double, longitude:Double) {
         _forecastList.postValue(Resource.loading(data = null))
         job = viewModelScope.launch {
             while (isActive) {
