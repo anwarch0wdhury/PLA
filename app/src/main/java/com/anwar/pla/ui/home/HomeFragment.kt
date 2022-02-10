@@ -1,11 +1,6 @@
 package com.anwar.pla.ui.home
 
-import android.Manifest
 import android.annotation.SuppressLint
-import android.content.pm.PackageManager
-import android.location.Address
-import android.location.Geocoder
-import android.location.Location
 import android.os.Bundle
 import android.view.View
 import android.view.View.GONE
@@ -14,27 +9,20 @@ import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.cardview.widget.CardView
-import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.anwar.pla.MainApp
 import com.anwar.pla.R
 import com.anwar.pla.common.Resource
 import com.anwar.pla.common.Utilities
-import com.anwar.pla.data.GpsLocation
 import com.anwar.pla.di.GlideApp
 import com.anwar.pla.model.weather.Current
 import com.anwar.pla.ui.weather.DailyForecastAdapter
 import com.anwar.pla.ui.weather.HourlyForecastAdapter
 import com.bumptech.glide.request.RequestOptions
-import com.google.android.gms.location.FusedLocationProviderClient
-import com.google.android.gms.location.LocationServices
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.*
-import java.util.*
 
 @AndroidEntryPoint
 class HomeFragment : Fragment(R.layout.home_fragment){
@@ -57,9 +45,7 @@ class HomeFragment : Fragment(R.layout.home_fragment){
     private lateinit var current_cloud      : TextView
     private lateinit var sunrise            : TextView
     private lateinit var sunset             : TextView
-    private lateinit var job                : Job
 
-    private lateinit var fusedLocationClient: FusedLocationProviderClient
     private val viewModel: HomeViewModel by viewModels()
     private val forecastAdapter = DailyForecastAdapter()
     private val hourlyAdapter   = HourlyForecastAdapter()
@@ -67,62 +53,13 @@ class HomeFragment : Fragment(R.layout.home_fragment){
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupUI(view)
-        when(isLocationPermissionGranted()){
-            true  ->{ location() }
-            false ->{}
-        }
-        setupObservers()
-        job = GlobalScope.launch(newSingleThreadContext("Update time")) {
-           while (isActive){
-               withContext(Dispatchers.Main) {
-                   current_day.text  = Utilities.day()
-                   current_time.text = Utilities.time()
-               }
-           }
-        }
-    }
-
-    private fun isLocationPermissionGranted(): Boolean {
-        return if (ActivityCompat.checkSelfPermission(
-                requireActivity(),
-                Manifest.permission.ACCESS_COARSE_LOCATION
-            ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
-                requireActivity(),
-                Manifest.permission.ACCESS_FINE_LOCATION
-            ) != PackageManager.PERMISSION_GRANTED
-        ) {
-            ActivityCompat.requestPermissions(
-                requireActivity(),
-                arrayOf(
-                    Manifest.permission.ACCESS_FINE_LOCATION,
-                    Manifest.permission.ACCESS_COARSE_LOCATION
-                ),
-                120
-            )
-            false
-        } else {
-            true
-        }
-    }
-
-    @SuppressLint("MissingPermission", "SetTextI18n")
-    private fun location(){
-        fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireActivity())
-        fusedLocationClient.lastLocation
-            .addOnSuccessListener { location : Location ->
-                 GpsLocation(location)
-                 val geocoder = Geocoder(requireActivity(), Locale.getDefault())
-                val addresses: List<Address> = geocoder.getFromLocation(
-                     location.latitude,
-                     location.longitude,
-                     1);
-                 val address = addresses.get(0)
-                 val country = address.countryName
-                 val area = address.adminArea
-
-                viewModel.address = MutableLiveData("$area, $country")
-                viewModel.setForecastList(location.latitude,location.longitude)
+        when(MainApp.locationActive && MainApp.internetActive){
+            true  ->{
+                viewModel.location(requireActivity())
+                setupObservers()
             }
+            false ->{ errorLabel.visibility = VISIBLE }
+        }
     }
 
     @SuppressLint("SetTextI18n")
@@ -149,6 +86,13 @@ class HomeFragment : Fragment(R.layout.home_fragment){
     }
 
     private fun setupObservers() {
+        viewModel.current_time.observe(viewLifecycleOwner,{time ->
+            current_time.text= time
+        })
+
+        viewModel.current_day.observe(viewLifecycleOwner,{day ->
+            current_day.text= day
+        })
 
         viewModel.weatherList.observe(viewLifecycleOwner, { forecast ->
             when (forecast.status) {
@@ -156,7 +100,6 @@ class HomeFragment : Fragment(R.layout.home_fragment){
                 Resource.Status.LOADING -> {
                     current_weather.visibility     = GONE
                     current_day.visibility         = GONE
-                    current_time.visibility        = GONE
                     current_address.visibility     = GONE
                     daily_weather_list.visibility  = GONE
                     hourly_weather_list.visibility = GONE
@@ -166,7 +109,6 @@ class HomeFragment : Fragment(R.layout.home_fragment){
                 Resource.Status.SUCCESS -> {
                     current_weather.visibility     = VISIBLE
                     current_day.visibility         = VISIBLE
-                    current_time.visibility        = VISIBLE
                     current_address.visibility     = VISIBLE
                     daily_weather_list.visibility  = VISIBLE
                     hourly_weather_list.visibility = VISIBLE
@@ -181,7 +123,6 @@ class HomeFragment : Fragment(R.layout.home_fragment){
                 Resource.Status.ERROR -> {
                     current_weather.visibility     = GONE
                     current_day.visibility         = GONE
-                    current_time.visibility        = GONE
                     current_address.visibility     = GONE
                     daily_weather_list.visibility  = GONE
                     hourly_weather_list.visibility = GONE
@@ -206,7 +147,6 @@ class HomeFragment : Fragment(R.layout.home_fragment){
             layoutManager = LinearLayoutManager(requireActivity(),LinearLayoutManager.HORIZONTAL,false)
             adapter = hourlyAdapter
         }
-
         current_icon        = view.findViewById(R.id.imgvCurrentIcon)
         current_day         = view.findViewById(R.id.tvCurrentDay)
         current_time        = view.findViewById(R.id.tvCurrentTime)
@@ -223,8 +163,4 @@ class HomeFragment : Fragment(R.layout.home_fragment){
 
     }
 
-    override fun onStop() {
-        super.onStop()
-        job.cancel()
-    }
 }

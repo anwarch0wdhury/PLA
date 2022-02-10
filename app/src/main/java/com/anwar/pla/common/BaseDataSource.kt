@@ -1,9 +1,5 @@
 package com.anwar.pla.common
 
-import android.content.Context
-import android.provider.Settings.Global.getString
-import android.provider.Settings.System.getString
-import com.anwar.pla.R
 import retrofit2.Response
 
 abstract class BaseDataSource {
