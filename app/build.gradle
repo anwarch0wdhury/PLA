@@ -21,21 +21,53 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
-    applicationVariants.all { variant ->
 
-        variant.outputs.all {
-            def formattedDate = new Date().format('yyMMdd')
-            def versionName = variant.versionName
-            outputFileName = "${versionName}_${formattedDate}.apk"
-        }
-    }
+
+    def localProperties = new Properties()
+    localProperties.load(new FileInputStream(rootProject.file("local.properties")))
 
     buildTypes {
+        debug {
+            buildConfigField 'String', 'WEATHER_API_KEY', localProperties['DEBUG_WEATHER_API_KEY']
+            applicationVariants.all { variant ->
+
+                variant.outputs.all {
+                    def formattedDate = new Date().format('yyMMdd')
+                    def versionName = variant.versionName
+                    outputFileName = "${versionName}_${formattedDate}_debug.apk"
+                }
+            }
+        }
         release {
             minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            buildConfigField 'String', 'WEATHER_API_KEY', localProperties['RELEASE_WEATHER_API_KEY']
+            applicationVariants.all { variant ->
+
+                variant.outputs.all {
+                    def formattedDate = new Date().format('yyMMdd')
+                    def versionName = variant.versionName
+                    outputFileName = "${versionName}_${formattedDate}.apk"
+                }
+            }
         }
     }
+
+    flavorDimensions "debug"
+
+    productFlavors {
+        demo {
+            dimension "debug"
+
+
+        }
+
+        full {
+            dimension "release"
+
+        }
+    }
+
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8

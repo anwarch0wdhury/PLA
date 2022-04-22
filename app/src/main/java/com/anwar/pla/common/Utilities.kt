@@ -6,7 +6,6 @@ import java.util.*
 class Utilities {
     companion object {
 
-
         fun msToKph(speed :Double):Double{
             val kph = speed*3.6
             return kph
@@ -28,12 +27,6 @@ class Utilities {
             return "https://openweathermap.org/img/wn/$icon@4x.png";
         }
 
-        fun hourToString(dt: Long) : String{
-            val sdf = SimpleDateFormat("hh:mm a")
-            val date = Date(dt * 1000)
-            return sdf.format(date)
-        }
-
         fun hoursAndDateToString(dt: Long) : String{
             val sdf = SimpleDateFormat("hh:mm a"+"\nd MMMM")
             val date = Date(dt * 1000)
@@ -44,6 +37,12 @@ class Utilities {
             val sdf = SimpleDateFormat("EEEE, d MMMM")
             val date = Date(dt * 1000)
             return sdf.format(date)
+        }
+
+        fun dateForNamajToString() : String{
+            val date = Date()
+            val formatter = SimpleDateFormat("d-MM-EEEE")
+            return formatter.format(date)
         }
 
     }

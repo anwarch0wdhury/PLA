@@ -9,7 +9,7 @@
     <fragment
         android:id="@+id/homeFragment"
         android:label="Home"
-        android:name="com.anwar.pla.ui.home.HomeFragment"
+        android:name="com.anwar.pla.home.ui.HomeFragment"
         tools:layout="@layout/home_fragment">
 
     </fragment>

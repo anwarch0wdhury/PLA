@@ -45,19 +45,256 @@
 
     <TextView
         android:id="@+id/tvCurrentAddress"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:fontFamily="@font/chakrapetchregular"
         android:text="Address, Country"
         android:textSize="12dp"
-        android:visibility="gone"
         android:textStyle="italic"
+        android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/guidelineV1"
         app:layout_constraintTop_toBottomOf="@+id/tvCurrentDay" />
 
     <androidx.cardview.widget.CardView
+        android:id="@+id/cvNamaj"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_margin="5dp"
+        android:foreground="?selectableItemBackground"
+        app:cardCornerRadius="8dp"
+        app:cardElevation="3dp"
+        app:cardPreventCornerOverlap="false"
+        app:layout_constraintBottom_toTopOf="@+id/guidelineH1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
 
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline2"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.14" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline3"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.28" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline4"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.42" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline5"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.56" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline6"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.70" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline7"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.84" />
+
+            <TextView
+                android:id="@+id/txtFazar"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="Fazr"
+                android:gravity="center"
+                android:fontFamily="@font/chakrapetchregular"
+                app:layout_constraintEnd_toStartOf="@+id/guideline2"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/txtDuhur"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="Duhur"
+                android:fontFamily="@font/chakrapetchregular"
+                android:gravity="center"
+                app:layout_constraintEnd_toStartOf="@+id/guideline4"
+                app:layout_constraintStart_toStartOf="@+id/guideline3"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/txtAsr"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="Asr"
+                android:fontFamily="@font/chakrapetchregular"
+                android:gravity="center"
+                app:layout_constraintEnd_toStartOf="@+id/guideline5"
+                app:layout_constraintStart_toStartOf="@+id/guideline4"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/txtMagrib"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="Magrib"
+                android:fontFamily="@font/chakrapetchregular"
+                android:gravity="center"
+                app:layout_constraintEnd_toStartOf="@+id/guideline7"
+                app:layout_constraintStart_toStartOf="@+id/guideline6"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/txtIsha"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="Isha"
+                android:fontFamily="@font/chakrapetchregular"
+                android:gravity="center"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/guideline7"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/txtSunrise"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="Sun Rise"
+                android:fontFamily="@font/chakrapetchregular"
+                android:gravity="center"
+                app:layout_constraintEnd_toStartOf="@+id/guideline3"
+                app:layout_constraintStart_toStartOf="@+id/guideline2"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/txtSunset"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="Sun \nSet"
+                android:fontFamily="@font/chakrapetchregular"
+                android:gravity="center"
+                app:layout_constraintEnd_toStartOf="@+id/guideline6"
+                app:layout_constraintStart_toStartOf="@+id/guideline5"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tvFazar"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="3.30"
+                android:fontFamily="@font/chakrapetchregular"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/guideline2"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/txtFazar" />
+
+            <TextView
+                android:id="@+id/tvDhuhr"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="12.45"
+                android:fontFamily="@font/chakrapetchregular"
+                app:layout_constraintBottom_toBottomOf="@+id/tvSunrise"
+                app:layout_constraintEnd_toStartOf="@+id/guideline4"
+                app:layout_constraintStart_toStartOf="@+id/guideline3"
+                app:layout_constraintTop_toTopOf="@+id/tvSunrise" />
+
+            <TextView
+                android:id="@+id/tvAsr"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="15.00"
+                android:fontFamily="@font/chakrapetchregular"
+                app:layout_constraintBottom_toBottomOf="@+id/tvDhuhr"
+                app:layout_constraintEnd_toStartOf="@+id/guideline5"
+                app:layout_constraintStart_toStartOf="@+id/guideline4"
+                app:layout_constraintTop_toTopOf="@+id/tvDhuhr" />
+
+            <TextView
+                android:id="@+id/tvMagrib"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="19.26"
+                android:fontFamily="@font/chakrapetchregular"
+                app:layout_constraintBottom_toBottomOf="@+id/tvSunset"
+                app:layout_constraintEnd_toStartOf="@+id/guideline7"
+                app:layout_constraintStart_toStartOf="@+id/guideline6"
+                app:layout_constraintTop_toTopOf="@+id/tvSunset" />
+
+            <TextView
+                android:id="@+id/tvIsha"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="20.40"
+                android:fontFamily="@font/chakrapetchregular"
+                app:layout_constraintBottom_toBottomOf="@+id/tvMagrib"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/guideline7"
+                app:layout_constraintTop_toTopOf="@+id/tvMagrib" />
+
+            <TextView
+                android:id="@+id/tvSunrise"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="3.50"
+                android:fontFamily="@font/chakrapetchregular"
+                app:layout_constraintBottom_toBottomOf="@+id/tvFazar"
+                app:layout_constraintEnd_toStartOf="@+id/guideline3"
+                app:layout_constraintStart_toStartOf="@+id/guideline2"
+                app:layout_constraintTop_toTopOf="@+id/tvFazar" />
+
+            <TextView
+                android:id="@+id/tvSunset"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="18.20"
+                android:fontFamily="@font/chakrapetchregular"
+                app:layout_constraintBottom_toBottomOf="@+id/tvAsr"
+                app:layout_constraintEnd_toStartOf="@+id/guideline6"
+                app:layout_constraintStart_toStartOf="@+id/guideline5"
+                app:layout_constraintTop_toTopOf="@+id/tvAsr" />
+
+            <TextView
+                android:id="@+id/tvMethod"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:textSize="10sp"
+                android:text="Muslim World League"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/guideline5"
+                app:layout_constraintTop_toBottomOf="@+id/tvIsha" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
         android:id="@+id/cvCurrentWeather"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -66,7 +303,6 @@
         app:cardCornerRadius="8dp"
         app:cardElevation="3dp"
         app:cardPreventCornerOverlap="false"
-        android:visibility="gone"
         app:layout_constraintBottom_toTopOf="@+id/rvHourlyList"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -113,7 +349,7 @@
                 android:src="@drawable/ic_feelsliketemp"
                 android:textSize="12sp"
                 android:textStyle="bold"
-                app:layout_constraintBottom_toTopOf="@+id/sunriseicon"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/imgvCurrentIcon" />
 
@@ -260,54 +496,6 @@
                 app:layout_constraintTop_toBottomOf="@+id/imgvCurrentIcon"
                 tools:text="It will be cold" />
 
-            <ImageView
-                android:id="@+id/sunriseicon"
-                android:layout_width="25dp"
-                android:layout_height="25dp"
-                android:layout_marginBottom="5dp"
-                android:src="@drawable/ic_sunrise"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/texthumidity" />
-
-            <ImageView
-                android:id="@+id/sunseticon"
-                android:layout_width="25dp"
-                android:layout_height="25dp"
-                android:src="@drawable/ic_sunset"
-                app:layout_constraintBottom_toBottomOf="@+id/sunrise"
-                app:layout_constraintStart_toEndOf="@+id/tvCurrentCloud"
-                app:layout_constraintTop_toTopOf="@+id/sunrise" />
-
-            <TextView
-                android:id="@+id/sunrise"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="2dp"
-                android:fontFamily="@font/chakrapetchregular"
-                android:gravity="center"
-                android:text="4.56 am"
-                android:textSize="12sp"
-                android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="@+id/sunriseicon"
-                app:layout_constraintEnd_toStartOf="@+id/tvCurrentCloud"
-                app:layout_constraintStart_toEndOf="@+id/sunriseicon"
-                app:layout_constraintTop_toTopOf="@+id/sunriseicon" />
-
-            <TextView
-                android:id="@+id/sunset"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="2dp"
-                android:fontFamily="@font/chakrapetchregular"
-                android:gravity="center"
-                android:text="6.23 pm"
-                android:textSize="12sp"
-                android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="@+id/sunseticon"
-                app:layout_constraintEnd_toStartOf="@+id/guidelineV6"
-                app:layout_constraintStart_toEndOf="@+id/sunseticon"
-                app:layout_constraintTop_toTopOf="@+id/sunseticon" />
-
             <TextView
                 android:id="@+id/tvCurrentTemp"
                 android:layout_width="wrap_content"
@@ -321,6 +509,17 @@
                 app:layout_constraintStart_toStartOf="@+id/guidelineV3"
                 app:layout_constraintTop_toTopOf="@+id/imgvCurrentIcon"
                 tools:text="-25C" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="OpenWeatherApi"
+                android:textSize="10sp"
+                android:gravity="center"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/guidelineV5"
+                app:layout_constraintTop_toBottomOf="@+id/tvCurrentPressure" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
 
@@ -333,7 +532,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        tools:context=".ui.home.HomeFragment"
+        tools:context=".home.ui.HomeFragment"
         tools:itemCount="7"
         tools:listitem="@layout/item_forecast" />
 
@@ -345,7 +544,7 @@
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintBottom_toTopOf="@+id/rvDailyList"
         app:layout_constraintStart_toStartOf="parent"
-        tools:context=".ui.home.HomeFragment"
+        tools:context=".home.ui.HomeFragment"
         tools:itemCount="7"
         tools:listitem="@layout/item_hourly" />
 
