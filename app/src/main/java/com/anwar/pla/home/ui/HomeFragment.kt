@@ -94,11 +94,11 @@ class HomeFragment : Fragment(R.layout.home_fragment){
     }
 
     private fun setupWeatherObservers() {
-        viewModel.current_time.observe(viewLifecycleOwner) { time ->
+        viewModel.currentTime.observe(viewLifecycleOwner) { time ->
             current_time.text = time
         }
 
-        viewModel.current_day.observe(viewLifecycleOwner) { day ->
+        viewModel.currentDay.observe(viewLifecycleOwner) { day ->
             current_day.text = day
         }
 

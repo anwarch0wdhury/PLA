@@ -33,8 +33,8 @@ class HomeViewModel @Inject constructor(private val repositoryWeather: ForecastR
 
     var address = MutableLiveData<String>()
 
-    val current_day   = MutableLiveData("25, jan")
-    val current_time  = MutableLiveData("00:00 am")
+    val currentDay   = MutableLiveData("25, jan")
+    val currentTime  = MutableLiveData("00:00 am")
 
     private lateinit var fusedLocationClient: FusedLocationProviderClient
 
@@ -55,10 +55,10 @@ class HomeViewModel @Inject constructor(private val repositoryWeather: ForecastR
                 val addresses: List<Address> = geocoder.getFromLocation(
                     location.latitude,
                     location.longitude,
-                    1);
-                val loc_address = addresses.get(0)
-                val area = loc_address.getAddressLine(0)
-                address = MutableLiveData("$area")
+                    1)
+                val locAddress = addresses[0]
+                val area = locAddress.getAddressLine(0)
+                address = MutableLiveData(area)
                 setForecastList(location.latitude,location.longitude)
                  }
             }
@@ -68,8 +68,8 @@ class HomeViewModel @Inject constructor(private val repositoryWeather: ForecastR
         job = scope.launch(newSingleThreadContext("Update time")) {
             while (isActive){
                 withContext(Dispatchers.Main) {
-                    current_day.value  = Utilities.day()
-                    current_time.value = Utilities.time()
+                    currentDay.value  = Utilities.day()
+                    currentTime.value = Utilities.time()
                 }
             }
         }
